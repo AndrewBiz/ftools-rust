@@ -11,7 +11,9 @@ Aruba.configure do |config|
     # puts config.root_directory.inspect
     # puts config.command_search_paths.inspect
     # puts config.command_runtime_environment.inspect
-    config.command_search_paths = ["/Users/anb/github/ftools/target/debug"]
-    puts "COMMANDS PATH = " + config.command_search_paths.inspect
+    config.command_search_paths = [File.join(config.root_directory, 'target/debug')]
+    puts
+    puts "PATH to COMMANDS to be tested = " + config.command_search_paths.inspect
+    puts
     # { |config| [File.join(config.root_directory.value, 'bin'), File.join(config.root_directory.value, 'exe')] }
 end
