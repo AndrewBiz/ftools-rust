@@ -1,21 +1,21 @@
 # language: en
-Feature: Generate a list of phtools-friendly-files
+Feature: Generate a list of ftools-friendly-files
   In order to simplify chosing the foto\video files for further process
   As a photographer
   I want to get the list of foto\video files in a form of a plain text
   (one filename by line)
 
   #@announce
-  Scenario: phtools knows about this tool
-    When I successfully run `phtools`
-    Then the stdout should contain "phls\t(generates list of phtools friendly files)"
-    And the stdout should not contain "phls\t(!UNDER CONSTRUCTION!)"
+  Scenario: ftools knows about this tool
+    When I successfully run `ftools`
+    Then the stdout should contain "ftls\t(generates list of ftools friendly files)"
+    And the stdout should not contain "ftls\t(!UNDER CONSTRUCTION!)"
 
   #@announce
   Scenario: Output with -h produces usage information
-    When I run `phls -h`
+    When I successfully run `ftls -h`
     Then the stderr should contain each of:
-    | phtools - *Keep Your Photos In Order*|
+    | ftools - *Keep Your Photos In Order*|
     | (c) ANB                   |
     | Usage:                    |
     | Options:                  |
@@ -26,11 +26,11 @@ Feature: Generate a list of phtools-friendly-files
 
   #@announce
   Scenario: Output with -v produces version information
-    When I run `phls -v`
+    When I run `ftls -v`
     Then the output should match /v[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
 
   #@announce
-  Scenario: Default output produces supported-by-phtools file list from current directory
+  Scenario: Default output produces supported-by-ftools file list from current directory
     Given empty files named:
     | foto.jpeg       |
     | foto.jpg        |
@@ -53,7 +53,7 @@ Feature: Generate a list of phtools-friendly-files
     | video.m2t       |
     | video.m2ts      |
     | video.3gp       |
-    When I successfully run `phls`
+    When I successfully run `ftls`
     Then the stdout should contain each of:
     | foto.jpeg |
     | foto.jpg  |
@@ -99,7 +99,7 @@ Feature: Generate a list of phtools-friendly-files
     | video.mkv       |
     | video.m2t       |
     | video.m2ts      |
-    When I successfully run `phls '*_yes*.*'`
+    When I successfully run `ftls '*_yes*.*'`
     Then the stdout should contain each of:
     | foto_yes_.jpeg  |
     | foto_yes_.tif   |
@@ -127,7 +127,7 @@ Feature: Generate a list of phtools-friendly-files
     Given empty files named:
     | foto_wrong.psd  |
     | video_wrong.xxx |
-    When I successfully run `phls foto_wrong.psd video_wrong.xxx`
+    When I successfully run `ftls foto_wrong.psd video_wrong.xxx`
     Then the stdout should not contain "foto_wrong.psd"
     And  the stdout should not contain "video_wrong.xxx"
 
@@ -148,7 +148,7 @@ Feature: Generate a list of phtools-friendly-files
     And empty files named:
     | foto_wrong.jpg  |
     | video_wrong.jpg |
-    When I successfully run `phls fotos videos`
+    When I successfully run `ftls fotos videos`
     Then the stdout should contain each of:
     | fotos/f4.jpg  |
     | fotos/f4.tiff |
@@ -170,7 +170,7 @@ Feature: Generate a list of phtools-friendly-files
     And a directory named "videos"
     And empty files named:
     | ./videos/v5_wrong.vvv  |
-    When I successfully run `phls fotos videos`
+    When I successfully run `ftls fotos videos`
     Then the stdout should not contain "fotos/f5_wrong.ppp"
     And  the stdout should not contain "videos/v5_wrong.vvv"
 
@@ -185,7 +185,7 @@ Feature: Generate a list of phtools-friendly-files
     And a directory named "fotos/fotos2/fotos3"
     And empty files named:
     | ./fotos/fotos2/fotos3/f6.png |
-    When I successfully run `phls --recursive fotos`
+    When I successfully run `ftls --recursive fotos`
     Then the stdout should contain each of:
     | fotos/f6.jpg                 |
     | fotos/fotos2/f6.tif          |
@@ -210,7 +210,7 @@ Feature: Generate a list of phtools-friendly-files
     | videos/video_yes_.mp4  |
     | videos/video.mpg       |
     | videos/video_yes_.mts  |
-    When I successfully run `phls fotos videos '*_yes*'`
+    When I successfully run `ftls fotos videos '*_yes*'`
     Then the stdout should contain each of:
     | fotos/foto1_yes_.jpeg  |
     | fotos/foto1_yes_.tif   |
@@ -235,7 +235,7 @@ Feature: Generate a list of phtools-friendly-files
     | foto2.jpg         |
     | video1.mov        |
     | video2.mov        |
-    When I successfully run `phls`
+    When I successfully run `ftls`
     Then the stdout should contain each of:
     | foto1.jpg         |
     | foto2.jpg         |
@@ -246,14 +246,14 @@ Feature: Generate a list of phtools-friendly-files
     | video.mov |
 
   #@announce
-  Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
+  Scenario: Output produces supported-by-ftools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
     Given a directory named "capitalized"
     Given empty files named:
     | ./capitalized/foto.TIF  |
     | ./capitalized/video.DV  |
     | ./capitalized/video.MOV |
     | ./capitalized/video1.mov |
-    When I successfully run `phls capitalized`
+    When I successfully run `ftls capitalized`
     Then the stdout should contain each of:
     | foto.TIF  |
     | video.DV  |
@@ -269,7 +269,7 @@ Feature: Generate a list of phtools-friendly-files
     | DSC3201.jpg       |
     | DSC3202.jpg       |
     | DSC3203.jpg       |
-    When I successfully run `phls --range '199..201'`
+    When I successfully run `ftls --range '199..201'`
     Then the stdout should contain each of:
     | DSC3199.jpg       |
     | DSC3200.jpg       |
@@ -288,7 +288,7 @@ Feature: Generate a list of phtools-friendly-files
     | DSC3201.jpg       |
     | DSC3202.jpg       |
     | DSC3203.jpg       |
-    When I successfully run `phls --range '199..20'`
+    When I successfully run `ftls --range '199..20'`
     And the stdout should not contain any of:
     | DSC3198.jpg       |
     | DSC3199.jpg       |
